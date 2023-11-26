@@ -1,12 +1,12 @@
 [#ftl]
 
-[#macro page title]
+[#macro page title] [#--šablona pro celou stránku--]
     <!DOCTYPE html>
     <html lang="cs">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>${title}</title>
+        <title>${title}</title> [#--titulek--]
         <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="/css/normalize.css"/>
         <link rel="stylesheet" href="/css/skeleton.css"/>
@@ -15,7 +15,7 @@
     </head>
     <body>
     <main class="container">
-        [#nested]
+        [#nested] [#--nested--]
     </main>
     </body>
     </html>
@@ -24,7 +24,7 @@
 [#macro totalCount]
     <div class="totalCount">
         [#if osoby.totalElements == 1]
-            Celkem nalezen <strong>${osoby.totalElements}</strong> záznam.
+            Celkem nalezen <strong>${osoby.totalElements}</strong> záznam. [#--počítání záznamů--]
         [#elseif osoby.totalElements <= 4]
             Celkem nalezeny <strong>${osoby.totalElements}</strong> záznamy.
         [#else ]
@@ -37,7 +37,7 @@
 [#macro pager]
     <div class="pager">
         [@pagerLink page=0 active=false text="⇤" /]
-        [@pagerLink page=osoby.number - 1 active=osoby.first text="←" /]
+        [@pagerLink page=osoby.number - 1 active=osoby.first text="←" /] [#--zobrazuje šipky a počty stránek--]
         [#list (0..!osoby.totalPages) as pageNumber]
             [@pagerLink page=pageNumber active=pageNumber==osoby.number text=pageNumber + 1 /]
         [/#list]

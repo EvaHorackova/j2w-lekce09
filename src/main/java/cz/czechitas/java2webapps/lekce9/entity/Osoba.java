@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Entity
 public class Osoba {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY) // primární klíč
   private Long id;
 
   private String jmeno;
@@ -24,7 +24,7 @@ public class Osoba {
 
   private LocalDate datumNarozeni;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false) // napojení na entitu adresa
   private Adresa adresa;
 
   public Long getId() {

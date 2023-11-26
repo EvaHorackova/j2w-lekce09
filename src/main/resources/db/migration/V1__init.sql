@@ -8,7 +8,7 @@ CREATE TABLE adresa
 
 CREATE TABLE osoba
 (
-    id             INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id             INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, // primární klíč
     jmeno          VARCHAR(100) NOT NULL,
     prijmeni       VARCHAR(100) NOT NULL,
     datum_narozeni DATE         NOT NULL,
@@ -16,6 +16,6 @@ CREATE TABLE osoba
     FOREIGN KEY (adresa_id) REFERENCES adresa (id)
 );
 
-CREATE INDEX ON adresa (obec);
-CREATE INDEX ON osoba (prijmeni, jmeno);
-CREATE INDEX ON osoba (datum_narozeni, prijmeni);
+CREATE INDEX ON adresa (obec); // index pro řazení dle obce
+CREATE INDEX ON osoba (prijmeni, jmeno); // index pro řazení dle příjmení, jméno
+CREATE INDEX ON osoba (datum_narozeni, prijmeni); // index pro řazení dle datum narození, příjmení

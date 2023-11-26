@@ -5,6 +5,7 @@ import cz.czechitas.java2webapps.lekce9.service.OsobaService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,30 +31,30 @@ public class OsobaController {
   }
 
   @GetMapping("/")
-  public ModelAndView zakladniSeznam(@PageableDefault(sort = {"prijmeni", "jmeno"}) Pageable pageable) {
+  public ModelAndView zakladniSeznam(@PageableDefault(sort = {"prijmeni", "jmeno"}, size = 20, direction = Sort.Direction.DESC) Pageable pageable) { // řazení dle příjmení, jméno; size je počet záznamů na stránce (default je 10); direction je směr řazení (asc/desc); @PageableDefault, pageable
     return new ModelAndView("osoby")
-            .addObject("osoby", service.seznamOsob(pageable));
+            .addObject("osoby", service.seznamOsob(pageable)); // service načte data
   }
 
-  @GetMapping("/dle-data-narozeni")
+  @GetMapping("/dle-data-narozeni") // řazení dle datum narození
   public ModelAndView dleDataNarozeni(@PageableDefault(sort = {"datumNarozeni", "prijmeni"}) Pageable pageable) {
     return new ModelAndView("osoby")
             .addObject("osoby", service.seznamOsob(pageable));
   }
 
-  @GetMapping("/rok-narozeni")
-  public ModelAndView rokNarozeni(@ModelAttribute("form") RokNarozeniForm form, @PageableDefault(sort = {"datumNarozeni", "prijmeni"}) Pageable pageable) {
+  @GetMapping("/rok-narozeni") // řazení dle rok narození
+  public ModelAndView rokNarozeni(@ModelAttribute("form") RokNarozeniForm form, @PageableDefault(sort = {"datumNarozeni", "prijmeni"}) Pageable pageable) { // form
     return new ModelAndView("osoby")
             .addObject("formInclude", "rok-narozeni.ftlh")
-            .addObject("osoby", service.seznamDleRokuNarozeni(form, pageable));
+            .addObject("osoby", service.seznamDleRokuNarozeni(form, pageable)); // mapování do form
   }
 
   @GetMapping("/prijmeni")
-  public ModelAndView prijmeni(@ModelAttribute("prijmeni") @Valid @NotBlank String prijmeni, @PageableDefault() Pageable pageable) {
+  public ModelAndView prijmeni(@ModelAttribute("prijmeni") @Valid @NotBlank String prijmeni, @PageableDefault() Pageable pageable) { // validace jsou přímo v metodě
     return new ModelAndView("osoby")
             .addObject("formInclude", "prijmeni.ftlh")
             //TODO vytvořit a použít správnou metodu pro načtení dat
-            .addObject("osoby", service.seznamOsob(pageable));
+            .addObject("osoby", service.seznamDlePrijmeni(prijmeni, pageable));
   }
 
   @GetMapping("/obec")
@@ -61,7 +62,7 @@ public class OsobaController {
     return new ModelAndView("osoby-s-adresou")
             .addObject("formInclude", "obec.ftlh")
             //TODO vytvořit a použít správnou metodu pro načtení dat
-            .addObject("osoby", service.seznamOsob(pageable));
+            .addObject("osoby", service.seznamDleObce(obec, pageable));
   }
 
   @GetMapping("/minimalni-vek")
@@ -69,7 +70,7 @@ public class OsobaController {
     return new ModelAndView("osoby")
             .addObject("formInclude", "minimalni-vek.ftlh")
             //TODO vytvořit a použít správnou metodu pro načtení dat
-            .addObject("osoby", service.seznamOsob(pageable));
+            .addObject("osoby", service.seznamDleVeku(vek, pageable));
   }
 
   @ModelAttribute("currentYear")
@@ -85,5 +86,5 @@ public class OsobaController {
   @ModelAttribute("firstYear")
   public int getFirstYear() {
     return LocalDate.now().minusYears(120L).getYear();
-  }
+  } // 120 let zpětně
 }

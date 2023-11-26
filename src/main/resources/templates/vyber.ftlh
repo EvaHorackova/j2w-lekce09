@@ -3,8 +3,8 @@
     <h1>Dotazy</h1>
 
     <section>
-        <h4>Zobrazit všechny záznamy</h4>
-        [#include "/_forms/dle-prijmeni-jmena.ftlh"]
+        <h4>Zobrazit všechny záznamy</h4> [#--nadpis, který se zobrazuje nad výběrovým formulářem--]
+        [#include "/_forms/dle-prijmeni-jmena.ftlh"] [#--samotný formulář se vkládá pomocí include z _forms--]
         [#include "/_forms/dle-data-narozeni.ftlh"]
     </section>
 

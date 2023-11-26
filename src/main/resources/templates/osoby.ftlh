@@ -2,7 +2,7 @@
 [@c.page title="Seznam osob"]
     <h1>Seznam osob</h1>
 
-    [#list osoby.content]
+    [#list osoby.content] [#--seznam--]
         <table class="u-full-width">
             <thead>
             <tr>
@@ -25,8 +25,8 @@
         <div>Seznam je prázdný.</div>
     [/#list]
 
-    [@c.totalCount /]
-    [@c.pager /]
-    [@c.controls /]
+    [@c.totalCount /] [#--makro pro počítání záznamů--]
+    [@c.pager /] [#--makro pro řádkování--]
+    [@c.controls /] [#--makro pro zobrazení celého formuláře a výběrového formuláře--]
 
 [/@c.page]
